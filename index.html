@@ -11,6 +11,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Tailwind & DaisyUI CDN -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.12/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -126,14 +130,13 @@
         </section>
 
         <!-- pets card section  -->
-        <section class="grid grid-cols-12 gap-4 mt-14">
+        <section class="md:grid flex flex-col md:grid-cols-12 gap-4 mt-14">
             <!-- left side -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 col-span-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 col-span-9">
                 <!-- cards -->
                 <div class="card bg-base-100 border">
                     <figure class="px-10 pt-10">
-                        <img src="images/pet.webp"
-                            alt="Shoes" class="rounded-xl" />
+                        <img src="images/pet.webp" alt="Shoes" class="rounded-xl" />
                     </figure>
                     <div class="card-body">
                         <h2 class="card-title font-bold">Mister Tartosh</h2>
@@ -157,17 +160,20 @@
                         </div>
                         <div class="divider"></div>
                         <div class="card-actions items-center justify-center">
-                            <button class="btn btn-ghost border border-gray-200 text-primary font-bold text-lg"><img src="images/like.png" alt=""></button>
-                            <button class="btn btn-ghost border border-gray-200 text-primary font-bold text-lg">Adopt</button>
-                            <button class="btn btn-ghost border border-gray-200 text-primary font-bold text-lg">Details</button>
-                           
+                            <button class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
+                                    src="images/like.png" alt=""></button>
+                            <button
+                                class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Adopt</button>
+                            <button
+                                class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Details</button>
+
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- right side -->
-            <div class="col-span-4 border rounded-xl p-14">
+            <div class="col-span-3 border rounded-xl p-10">
                 <div class="grid grid-cols-2">
                     <img src="images/pet.webp" alt="">
                     <img src="images/pet.webp" alt="">
@@ -177,6 +183,47 @@
             </div>
         </section>
     </main>
+
+    <footer class="bg-title mt-14">
+        <section class="w-11/12 m-auto">
+            <div class="footer text-base-content text-white p-10 justify-between">
+                <nav class="text-gray-400">
+                    <div class="flex items-center">
+                        <img src="images/logo.webp" alt="">
+                        <a class="btn btn-ghost text-2xl md:text-3xl font-black text-white">Paddy</a>
+                    </div>
+                  <a class="link link-hover">Location: av. Washington 165, NY CA </a>
+                  <a class="link link-hover">54003</a>
+                  <a class="link link-hover">Phone: +31 85 964 47 25</a>
+                  <a class="link link-hover">Email: info@yourdomain.com</a>
+                  <a class="link link-hover">Openings hours: 9.00 AM - 5.00 PM</a>
+
+                  <div class="text-3xl flex gap-4 mt-2">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-youtube"></i>
+                    <i class="fa-brands fa-x-twitter"></i>
+                  </div>
+                </nav>
+                <nav class="text-gray-400">
+                  <h6 class="text-lg font-semibold text-gray-300">Usefull Links</h6>
+                  <a class="link link-hover">Home</a>
+                  <a class="link link-hover">About Us</a>
+                  <a class="link link-hover">Animals</a>
+                  <a class="link link-hover">Foundation</a>
+                  <a class="link link-hover">Contact</a>
+                </nav>
+                <nav>
+                  <h6 class="text-lg font-semibold text-gray-300">Drop a Message</h6>
+                  <div class="grid gap-4">
+                    <input type="email" class="input bg-gray-900 text-gray-300" placeholder="Enter your email">
+                    <button class="btn bg-primary text-white font-bold border-none">Subscribe</button>
+
+                  </div>
+                </nav>
+            </div>
+        </section>
+    </footer>
     <script src="./script.js"></script>
 </body>
 
