@@ -52,7 +52,7 @@ const displayAllPets = (pets) =>{
     });
 }
 
-const dogsBtn = async()=>{
+const dogsBtn = async(categoryName)=>{
     document.getElementById('pets-container').innerHTML = "";
     document.getElementById('loading').classList.remove('hidden');
 
@@ -60,7 +60,7 @@ const dogsBtn = async()=>{
         document.getElementById('loading').classList.add('hidden')
         displayDogs(data.data)
     }, 2000);
-    const res = await fetch(`https://openapi.programming-hero.com/api/peddy/category/dog`);
+    const res = await fetch(`https://openapi.programming-hero.com/api/peddy/category/${categoryName?categoryName:'not found'}`);
     const data = await res.json();
 }
 
@@ -118,4 +118,25 @@ const displayDogs = async(dogs)=>{
 
 }
 
+
+const categories = async() =>{
+    const res = await fetch('https://openapi.programming-hero.com/api/peddy/categories')
+    const data = await res.json();
+    displayCategories(data.categories)
+}
+
+const displayCategories = (category) =>{
+    const categoriesConatiner = document.getElementById('categories');
+    category.forEach(e => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+        <div onclick="dogsBtn('${e.category}')" class="cursor-pointer flex items-center gap-2 bg-gray-100 py-4 md:px-20 lg:px-24 rounded-2xl hover:rounded-full">
+                    <img class="w-10" src=${e.category_icon} alt="">
+                    <h2>${e.category}</h2>
+                </div>
+        `
+        categoriesConatiner.appendChild(div)
+    });
+}
+categories()
 loadAllPets()
