@@ -50,7 +50,7 @@ const displayAllPets = (pets) => {
                         <div class="card-actions items-center justify-center">
                             <button  onclick=likedImage('${pet.image}') class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
                                     src="images/like.png" alt=""></button>
-                            <button
+                            <button id=${pet.petId} onclick=adoptBtn(${pet.petId})
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Adopt</button>
                             <button onclick=petDetails('${pet.petId}')
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Details</button>
@@ -128,7 +128,7 @@ const displayByCategory = async (pets) => {
                         <div class="card-actions items-center justify-center">
                             <button onclick=likedImage('${e.image}') class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
                                     src="images/like.png" alt=""></button>
-                            <button
+                            <button id=${e.petId} onclick=adoptBtn('${e.petId}')
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Adopt</button>
                             <button onclick=petDetails('${e.petId}')
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Details</button>
@@ -241,8 +241,43 @@ const displayPetDetails = (pet)=>{
     
     `
     detailsModal.appendChild(div);
+    
   };
 
+const countDown = (petId)=>{
+  let i = 2;
+  const countDown = setInterval(() => {
+    document.getElementById('countdown').textContent = i;
+    i--;
+    if (i < 1) {
+      clearInterval(countDown);
+      document.getElementById('my_modal_5').close();
+      const adopt = document.getElementById(petId);
+      adopt.innerText = 'Adopted'
+      adopt.disabled = true;
+    }
+  }, 1000);
+}
+
+// Adopt button
+const adoptBtn = (petId)=>{
+  console.log(petId)
+  countDown(petId)
+  const detailsModal = document.getElementById('details-modal');
+  detailsModal.innerHTML = "";
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <div class="card bg-base-100 text-center">
+        <div><i class="fa-solid fa-handshake text-primary text-5xl"></i></div>
+        <h2 class="text-5xl font-black">Congrates</h2>
+        <p class="mb-2 mt-4 text-lg text-description">Adoption Process is Start for your Pet</p>
+        <div id="countdown" class="text-5xl font-bold text-center">3</div>           
+    </div>
+    
+    `
+    detailsModal.appendChild(div);
+    my_modal_5.showModal()
+}
 
 categories();
 loadAllPets();
