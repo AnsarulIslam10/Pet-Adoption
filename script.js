@@ -2,8 +2,9 @@ const loadAllPets = async () => {
   const response = await fetch(
     `https://openapi.programming-hero.com/api/peddy/pets`
   );
-  const data = await response.json();
-  displayAllPets(data.pets);
+  sortedPrice = await response.json();
+  displayAllPets(sortedPrice.pets);
+  // console.log(sortedPrice.pets)
 };
 
 const displayAllPets = (pets) => {
@@ -77,19 +78,40 @@ const categoryBtn = async (categoryName) => {
     document.getElementById("loading").classList.add("hidden");
     displayByCategory(data.data);
   }, 2000);
+
   const res = await fetch(
     `https://openapi.programming-hero.com/api/peddy/category/${
-      categoryName != 'Bird' ? categoryName : "not found"
+      categoryName?categoryName:"not found"
     }`
   );
   const data = await res.json();
+
 };
 
 const displayByCategory = async (pets) => {
   const petsContainer = document.getElementById("pets-container");
   petsContainer.innerHTML = "";
+  if (pets.length == 0) {
+    petsContainer.classList.remove('grid')
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <div class="flex justify-center items-center text-center flex-col space-y-2 col-span-3">
+            <div>
+              <img src="images/error.webp" alt="">
+            </div>
+            <h2 class="text-4xl font-black">No Information Available</h2>
+            <p class="text-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at 
+                its layout. The point of using Lorem Ipsum is that it has a.</p>
+        </div>
+          
+        
+        `;
+        petsContainer.appendChild(div);
+  }else{
+
+  
+    petsContainer.classList.add('grid')
   pets.forEach((e) => {
-    
     const div = document.createElement("div");
     div.innerHTML = `
         <div class="card bg-base-100 border">
@@ -139,7 +161,9 @@ const displayByCategory = async (pets) => {
         
         `;
     petsContainer.appendChild(div);
+                              
   });
+}
 };
 
 const categories = async () => {
@@ -151,7 +175,6 @@ const categories = async () => {
 };
 
 const displayCategories = (category) => {
-  // console.log(category[0].category)
   const categoriesConatiner = document.getElementById("categories");
   category.forEach((e) => {
     const div = document.createElement("div");
@@ -261,7 +284,6 @@ const countDown = (petId)=>{
 
 // Adopt button
 const adoptBtn = (petId)=>{
-  console.log(petId)
   countDown(petId)
   const detailsModal = document.getElementById('details-modal');
   detailsModal.innerHTML = "";
@@ -279,5 +301,14 @@ const adoptBtn = (petId)=>{
     my_modal_5.showModal()
 }
 
+// array to sort pets in decending order
+let sortedPrice = [];
+const sortPrice = () =>{
+   const sortedByPrice = [...sortedPrice.pets].sort((a,b) => b.price - a.price);
+   displayAllPets(sortedByPrice)
+}
+const sortBtn = ()=>{
+  sortPrice();
+}
 categories();
 loadAllPets();
