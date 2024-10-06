@@ -1,9 +1,16 @@
 const loadAllPets = async () => {
+  document.getElementById("loading").classList.remove("hidden");
+
+  setTimeout(function () {
+    document.getElementById("loading").classList.add("hidden");
+    displayAllPets(sortedPrice.pets);
+  }, 2000);
+
   const response = await fetch(
     `https://openapi.programming-hero.com/api/peddy/pets`
   );
   sortedPrice = await response.json();
-  displayAllPets(sortedPrice.pets);
+  // displayAllPets(sortedPrice.pets);
   // console.log(sortedPrice.pets)
 };
 
@@ -38,7 +45,9 @@ const displayAllPets = (pets) => {
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/gander.png" alt="">
-                                <p>Gender: ${pet.gender?pet.gender:'Not Found'}</p>
+                                <p>Gender: ${
+                                  pet.gender ? pet.gender : "Not Found"
+                                }</p>
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/dollar.png" alt="">
@@ -49,9 +58,13 @@ const displayAllPets = (pets) => {
                         </div>
                         <div class="divider"></div>
                         <div class="card-actions items-center justify-center">
-                            <button  onclick=likedImage('${pet.image}') class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
+                            <button  onclick=likedImage('${
+                              pet.image
+                            }') class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
                                     src="images/like.png" alt=""></button>
-                            <button id=${pet.petId} onclick=adoptBtn(${pet.petId})
+                            <button id=${pet.petId} onclick=adoptBtn(${
+      pet.petId
+    })
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Adopt</button>
                             <button onclick=petDetails('${pet.petId}')
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Details</button>
@@ -68,31 +81,33 @@ const displayAllPets = (pets) => {
 let prevCategoryBtnId = null;
 const categoryBtn = async (categoryName) => {
   if (categoryName != prevCategoryBtnId && prevCategoryBtnId) {
-    document.getElementById(prevCategoryBtnId).classList.remove('bg-[#E7F2F2]','rounded-full', 'border', 'border-gray-400')
+    document
+      .getElementById(prevCategoryBtnId)
+      .classList.remove("bg-[#E7F2F2]", "rounded-full", "border-gray-400");
   }
   document.getElementById("pets-container").innerHTML = "";
   document.getElementById("loading").classList.remove("hidden");
-  document.getElementById(categoryName).classList.add('bg-[#E7F2F2]','rounded-full', 'border', 'border-gray-400')
+  document
+    .getElementById(categoryName)
+    .classList.add("bg-[#E7F2F2]", "rounded-full", "border", "border-gray-400");
   prevCategoryBtnId = categoryName;
+
   setTimeout(function () {
     document.getElementById("loading").classList.add("hidden");
     displayByCategory(data.data);
   }, 2000);
 
   const res = await fetch(
-    `https://openapi.programming-hero.com/api/peddy/category/${
-      categoryName?categoryName:"not found"
-    }`
+    `https://openapi.programming-hero.com/api/peddy/category/${categoryName}`
   );
   const data = await res.json();
-
 };
 
 const displayByCategory = async (pets) => {
   const petsContainer = document.getElementById("pets-container");
   petsContainer.innerHTML = "";
   if (pets.length == 0) {
-    petsContainer.classList.remove('grid')
+    petsContainer.classList.remove("grid");
     const div = document.createElement("div");
     div.innerHTML = `
         <div class="flex justify-center items-center text-center flex-col space-y-2 col-span-3">
@@ -106,14 +121,14 @@ const displayByCategory = async (pets) => {
           
         
         `;
-        petsContainer.appendChild(div);
-  }else{
-
-  
-    petsContainer.classList.add('grid')
-  pets.forEach((e) => {
-    const div = document.createElement("div");
-    div.innerHTML = `
+    petsContainer.appendChild(div);
+    
+  } 
+  else {
+    petsContainer.classList.add("grid");
+    pets.forEach((e) => {
+      const div = document.createElement("div");
+      div.innerHTML = `
         <div class="card bg-base-100 border">
                     <figure class="px-6 pt-6">
                         <img class="w-full rounded-2xl" src=${
@@ -137,7 +152,9 @@ const displayByCategory = async (pets) => {
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/gander.png" alt="">
-                                <p>Gender: ${e.gender?e.gender:'Not Found'}</p>
+                                <p>Gender: ${
+                                  e.gender ? e.gender : "Not Found"
+                                }</p>
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/dollar.png" alt="">
@@ -148,7 +165,9 @@ const displayByCategory = async (pets) => {
                         </div>
                         <div class="divider"></div>
                         <div class="card-actions items-center justify-center">
-                            <button onclick=likedImage('${e.image}') class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
+                            <button onclick=likedImage('${
+                              e.image
+                            }') class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
                                     src="images/like.png" alt=""></button>
                             <button id=${e.petId} onclick=adoptBtn('${e.petId}')
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Adopt</button>
@@ -160,10 +179,9 @@ const displayByCategory = async (pets) => {
                 </div>
         
         `;
-    petsContainer.appendChild(div);
-                              
-  });
-}
+      petsContainer.appendChild(div);
+    });
+  }
 };
 
 const categories = async () => {
@@ -184,37 +202,41 @@ const displayCategories = (category) => {
                     <h2 class="text-xl font-black">${e.category}</h2>
                 </div>
         `;
-        
+
     categoriesConatiner.appendChild(div);
   });
 };
 
 // liked images
-const likedImage = (image)=>{
-  const likedImageContainer = document.getElementById('liked-image-container');
-  const div = document.createElement('div');
+const likedImage = (image) => {
+  const likedImageContainer = document.getElementById("liked-image-container");
+  const div = document.createElement("div");
   div.innerHTML = `
   <img class="border rounded-2xl p-2" src=${image} alt="">
-  `
-  likedImageContainer.appendChild(div)
-}
+  `;
+  likedImageContainer.appendChild(div);
+};
 
 // details button
-const petDetails = async(id) =>{
-  const res = await fetch(`https://openapi.programming-hero.com/api/peddy/pet/${id}`)
+const petDetails = async (id) => {
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/peddy/pet/${id}`
+  );
   const data = await res.json();
-  my_modal_5.showModal()
-  displayPetDetails(data.petData)
-}
+  my_modal_5.showModal();
+  displayPetDetails(data.petData);
+};
 
-const displayPetDetails = (pet)=>{
-  const detailsModal = document.getElementById('details-modal');
+const displayPetDetails = (pet) => {
+  const detailsModal = document.getElementById("details-modal");
   detailsModal.innerHTML = "";
-    const div = document.createElement('div');
-    div.innerHTML = `
+  const div = document.createElement("div");
+  div.innerHTML = `
     <div class="card bg-base-100">
                       <figure class="px-1 pt-1 md:px-6 md:pt-6">
-                          <img class="w-full rounded-2xl" src=${pet.image} alt="Shoes" class="rounded-xl" />
+                          <img class="w-full rounded-2xl" src=${
+                            pet.image
+                          } alt="Shoes" class="rounded-xl" />
                       </figure>
                       <div class="card-body">
                           <h2 class="card-title font-bold">${pet.pet_name}</h2>
@@ -222,31 +244,37 @@ const displayPetDetails = (pet)=>{
                               <div class="flex items-center gap-2 text-base">
                                   <img src="images/breed.png" alt="">
                                   <p>Breed: ${
-                                      pet.breed ? pet.breed : "Not Found"
-                                      }</p>
+                                    pet.breed ? pet.breed : "Not Found"
+                                  }</p>
                               </div>
                               <div class="flex items-center gap-2 text-base">
                                   <img src="images/calendar.png" alt="">
                                   <p>Birth: ${
-                                      pet.date_of_birth
+                                    pet.date_of_birth
                                       ? pet.date_of_birth
                                       : "Not Found"
-                                      }</p>
+                                  }</p>
                               </div>
                               <div class="flex items-center gap-2 text-base">
                                   <img src="images/gander.png" alt="">
-                                  <p>Gender: ${pet.gender?pet.gender:'Not Found'}</p>
+                                  <p>Gender: ${
+                                    pet.gender ? pet.gender : "Not Found"
+                                  }</p>
                               </div>
                               <div class="flex items-center gap-2 text-base">
                                   <img src="images/dollar.png" alt="">
                                   <p>Price: ${
-                                      pet.price ? pet.price + "$" : "Not Available"
-                                      }</p>
+                                    pet.price
+                                      ? pet.price + "$"
+                                      : "Not Available"
+                                  }</p>
                               </div>
                               </div>
                               <div class="flex items-center gap-2 text-base text-description">
                                   <img src="images/gander.png" alt="">
-                                  <p>Vaccinated status: ${pet.vaccinated_status}</p>
+                                  <p>Vaccinated status: ${
+                                    pet.vaccinated_status
+                                  }</p>
                               </div>
                           <div class="divider"></div>
                           <div>
@@ -262,33 +290,32 @@ const displayPetDetails = (pet)=>{
                       </div>
                   </div>
     
-    `
-    detailsModal.appendChild(div);
-    
-  };
+    `;
+  detailsModal.appendChild(div);
+};
 
-const countDown = (petId)=>{
+const countDown = (petId) => {
   let i = 2;
   const countDown = setInterval(() => {
-    document.getElementById('countdown').textContent = i;
+    document.getElementById("countdown").textContent = i;
     i--;
     if (i < 1) {
       clearInterval(countDown);
-      document.getElementById('my_modal_5').close();
+      document.getElementById("my_modal_5").close();
       const adopt = document.getElementById(petId);
-      adopt.innerText = 'Adopted'
+      adopt.innerText = "Adopted";
       adopt.disabled = true;
     }
   }, 1000);
-}
+};
 
 // Adopt button
-const adoptBtn = (petId)=>{
-  countDown(petId)
-  const detailsModal = document.getElementById('details-modal');
+const adoptBtn = (petId) => {
+  countDown(petId);
+  const detailsModal = document.getElementById("details-modal");
   detailsModal.innerHTML = "";
-    const div = document.createElement('div');
-    div.innerHTML = `
+  const div = document.createElement("div");
+  div.innerHTML = `
     <div class="card bg-base-100 text-center">
         <div><i class="fa-solid fa-handshake text-primary text-5xl"></i></div>
         <h2 class="text-5xl font-black">Congrates</h2>
@@ -296,19 +323,19 @@ const adoptBtn = (petId)=>{
         <div id="countdown" class="text-5xl font-bold text-center">3</div>           
     </div>
     
-    `
-    detailsModal.appendChild(div);
-    my_modal_5.showModal()
-}
+    `;
+  detailsModal.appendChild(div);
+  my_modal_5.showModal();
+};
 
 // array to sort pets in decending order
 let sortedPrice = [];
-const sortPrice = () =>{
-   const sortedByPrice = [...sortedPrice.pets].sort((a,b) => b.price - a.price);
-   displayAllPets(sortedByPrice)
-}
-const sortBtn = ()=>{
+const sortPrice = () => {
+  const sortedByPrice = [...sortedPrice.pets].sort((a, b) => b.price - a.price);
+  displayAllPets(sortedByPrice);
+};
+const sortBtn = () => {
   sortPrice();
-}
+};
 categories();
 loadAllPets();
