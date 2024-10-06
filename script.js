@@ -1,6 +1,5 @@
 const loadAllPets = async () => {
   document.getElementById("loading").classList.remove("hidden");
-
   setTimeout(function () {
     document.getElementById("loading").classList.add("hidden");
     displayAllPets(sortedPrice.pets);
@@ -10,8 +9,6 @@ const loadAllPets = async () => {
     `https://openapi.programming-hero.com/api/peddy/pets`
   );
   sortedPrice = await response.json();
-  // displayAllPets(sortedPrice.pets);
-  // console.log(sortedPrice.pets)
 };
 
 const displayAllPets = (pets) => {
@@ -110,19 +107,15 @@ const displayByCategory = async (pets) => {
     petsContainer.classList.remove("grid");
     const div = document.createElement("div");
     div.innerHTML = `
-        <div class="flex justify-center items-center text-center flex-col space-y-2 col-span-3">
+        <div class="flex justify-center items-center text-center flex-col space-y-8 col-span-3 border bg-base-200 rounded-xl p-8">
             <div>
               <img src="images/error.webp" alt="">
             </div>
             <h2 class="text-4xl font-black">No Information Available</h2>
-            <p class="text-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at 
-                its layout. The point of using Lorem Ipsum is that it has a.</p>
+            <p class="text-description">Oops! It looks like there are no pets here right now. Try browsing other sections.</p>
         </div>
-          
-        
         `;
     petsContainer.appendChild(div);
-    
   } 
   else {
     petsContainer.classList.add("grid");
@@ -177,7 +170,6 @@ const displayByCategory = async (pets) => {
                         </div>
                     </div>
                 </div>
-        
         `;
       petsContainer.appendChild(div);
     });
@@ -202,7 +194,6 @@ const displayCategories = (category) => {
                     <h2 class="text-xl font-black">${e.category}</h2>
                 </div>
         `;
-
     categoriesConatiner.appendChild(div);
   });
 };
@@ -289,7 +280,6 @@ const displayPetDetails = (pet) => {
                           </form>
                       </div>
                   </div>
-    
     `;
   detailsModal.appendChild(div);
 };
@@ -322,7 +312,6 @@ const adoptBtn = (petId) => {
         <p class="mb-2 mt-4 text-lg text-description">Adoption Process is Start for your Pet</p>
         <div id="countdown" class="text-5xl font-bold text-center">3</div>           
     </div>
-    
     `;
   detailsModal.appendChild(div);
   my_modal_5.showModal();
@@ -331,7 +320,6 @@ const adoptBtn = (petId) => {
 // array to sort pets in decending order
 let sortedPrice = [];
 const sortPrice = () => {
-  // console.log(...sortedPrice.pets)
   const sortedByPrice = [...sortedPrice.pets].sort((a, b) => b.price - a.price);
   displayAllPets(sortedByPrice);
 };
