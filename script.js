@@ -64,17 +64,22 @@ const displayAllPets = (pets) => {
   });
 };
 
+let prevCategoryBtnId = null;
 const categoryBtn = async (categoryName) => {
+  if (categoryName != prevCategoryBtnId && prevCategoryBtnId) {
+    document.getElementById(prevCategoryBtnId).classList.remove('bg-[#E7F2F2]','rounded-full', 'border', 'border-gray-400')
+  }
   document.getElementById("pets-container").innerHTML = "";
   document.getElementById("loading").classList.remove("hidden");
-
+  document.getElementById(categoryName).classList.add('bg-[#E7F2F2]','rounded-full', 'border', 'border-gray-400')
+  prevCategoryBtnId = categoryName;
   setTimeout(function () {
     document.getElementById("loading").classList.add("hidden");
     displayByCategory(data.data);
   }, 2000);
   const res = await fetch(
     `https://openapi.programming-hero.com/api/peddy/category/${
-      categoryName ? categoryName : "Not Found"
+      categoryName != 'Bird' ? categoryName : "not found"
     }`
   );
   const data = await res.json();
@@ -83,8 +88,8 @@ const categoryBtn = async (categoryName) => {
 const displayByCategory = async (pets) => {
   const petsContainer = document.getElementById("pets-container");
   petsContainer.innerHTML = "";
-
   pets.forEach((e) => {
+    
     const div = document.createElement("div");
     div.innerHTML = `
         <div class="card bg-base-100 border">
@@ -121,11 +126,11 @@ const displayByCategory = async (pets) => {
                         </div>
                         <div class="divider"></div>
                         <div class="card-actions items-center justify-center">
-                            <button class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
+                            <button onclick=likedImage('${e.image}') class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg"><img
                                     src="images/like.png" alt=""></button>
                             <button
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Adopt</button>
-                            <button
+                            <button onclick=petDetails('${e.petId}')
                                 class="btn btn-sm btn-ghost border border-gray-200 text-primary font-bold text-lg">Details</button>
 
                         </div>
@@ -146,15 +151,17 @@ const categories = async () => {
 };
 
 const displayCategories = (category) => {
+  // console.log(category[0].category)
   const categoriesConatiner = document.getElementById("categories");
   category.forEach((e) => {
     const div = document.createElement("div");
     div.innerHTML = `
-        <div onclick="categoryBtn('${e.category}')" class="cursor-pointer flex items-center gap-2 bg-gray-100 py-10 md:px-20 lg:px-24 rounded-3xl hover:rounded-full justify-center font-inter">
+        <div id=${e.category} onclick="categoryBtn('${e.category}')" class="cursor-pointer flex items-center gap-2 border py-10 md:px-20 lg:px-24 rounded-3xl justify-center font-inter">
                     <img class="w-14" src=${e.category_icon} alt="">
                     <h2 class="text-xl font-black">${e.category}</h2>
                 </div>
         `;
+        
     categoriesConatiner.appendChild(div);
   });
 };
