@@ -331,11 +331,19 @@ const adoptBtn = (petId) => {
 // array to sort pets in decending order
 let sortedPrice = [];
 const sortPrice = () => {
+  // console.log(...sortedPrice.pets)
   const sortedByPrice = [...sortedPrice.pets].sort((a, b) => b.price - a.price);
   displayAllPets(sortedByPrice);
 };
+
 const sortBtn = () => {
-  sortPrice();
+  document.getElementById("loading").classList.remove("hidden");
+  document.getElementById('pets-container').innerHTML = '';
+  setTimeout(function () {
+    document.getElementById("loading").classList.add("hidden");
+    sortPrice()
+  }, 2000);
+
 };
 categories();
 loadAllPets();
