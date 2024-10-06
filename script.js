@@ -37,7 +37,7 @@ const displayAllPets = (pets) => {
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/gander.png" alt="">
-                                <p>Gender: ${pet.gender}</p>
+                                <p>Gender: ${pet.gender?pet.gender:'Not Found'}</p>
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/dollar.png" alt="">
@@ -110,7 +110,7 @@ const displayByCategory = async (pets) => {
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/gander.png" alt="">
-                                <p>Gender: ${e.gender}</p>
+                                <p>Gender: ${e.gender?e.gender:'Not Found'}</p>
                             </div>
                             <div class="flex items-center gap-2 text-base">
                                 <img src="images/dollar.png" alt="">
@@ -173,8 +173,68 @@ const likedImage = (image)=>{
 const petDetails = async(id) =>{
   const res = await fetch(`https://openapi.programming-hero.com/api/peddy/pet/${id}`)
   const data = await res.json();
-  console.log(data.petData)
+  my_modal_5.showModal()
+  displayPetDetails(data.petData)
 }
+
+const displayPetDetails = (pet)=>{
+  const detailsModal = document.getElementById('details-modal');
+  detailsModal.innerHTML = "";
+    const div = document.createElement('div');
+    div.innerHTML = `
+    <div class="card bg-base-100">
+                      <figure class="px-1 pt-1 md:px-6 md:pt-6">
+                          <img class="w-full rounded-2xl" src=${pet.image} alt="Shoes" class="rounded-xl" />
+                      </figure>
+                      <div class="card-body">
+                          <h2 class="card-title font-bold">${pet.pet_name}</h2>
+                          <div class="text-description grid grid-cols-1 md:grid-cols-2">
+                              <div class="flex items-center gap-2 text-base">
+                                  <img src="images/breed.png" alt="">
+                                  <p>Breed: ${
+                                      pet.breed ? pet.breed : "Not Found"
+                                      }</p>
+                              </div>
+                              <div class="flex items-center gap-2 text-base">
+                                  <img src="images/calendar.png" alt="">
+                                  <p>Birth: ${
+                                      pet.date_of_birth
+                                      ? pet.date_of_birth
+                                      : "Not Found"
+                                      }</p>
+                              </div>
+                              <div class="flex items-center gap-2 text-base">
+                                  <img src="images/gander.png" alt="">
+                                  <p>Gender: ${pet.gender?pet.gender:'Not Found'}</p>
+                              </div>
+                              <div class="flex items-center gap-2 text-base">
+                                  <img src="images/dollar.png" alt="">
+                                  <p>Price: ${
+                                      pet.price ? pet.price + "$" : "Not Available"
+                                      }</p>
+                              </div>
+                              </div>
+                              <div class="flex items-center gap-2 text-base text-description">
+                                  <img src="images/gander.png" alt="">
+                                  <p>Vaccinated status: ${pet.vaccinated_status}</p>
+                              </div>
+                          <div class="divider"></div>
+                          <div>
+                              <h2 class="text-lg font-bold">Details Information</h2>
+                              <p>${pet.pet_details}</p>
+                          </div>
+                      </div>
+                      <div class="modal-action flex justify-center">
+                          <form method="dialog" class="w-full">
+                              <!-- if there is a button in form, it will close the modal -->
+                              <button class="btn w-full">Cancle</button>
+                          </form>
+                      </div>
+                  </div>
+    
+    `
+    detailsModal.appendChild(div);
+  };
 
 
 categories();
