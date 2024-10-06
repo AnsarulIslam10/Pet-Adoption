@@ -75,20 +75,16 @@ const displayAllPets = (pets) => {
   });
 };
 
-let prevCategoryBtnId = null;
 const categoryBtn = async (categoryName) => {
-  if (categoryName != prevCategoryBtnId && prevCategoryBtnId) {
-    document
-      .getElementById(prevCategoryBtnId)
-      .classList.remove("bg-[#E7F2F2]", "rounded-full", "border-gray-400");
+  const categoryButtons = document.getElementsByClassName('categoryButtons');
+  for (const btn of categoryButtons) {
+    btn.classList.remove('active-btn', 'rounded-full')
   }
+  document.getElementById(categoryName).classList.add('active-btn', 'rounded-full')
+
   document.getElementById("pets-container").innerHTML = "";
   document.getElementById("loading").classList.remove("hidden");
-  document
-    .getElementById(categoryName)
-    .classList.add("bg-[#E7F2F2]", "rounded-full", "border", "border-gray-400");
-  prevCategoryBtnId = categoryName;
-
+  document.getElementById(categoryName).classList.add("active-btn");
   setTimeout(function () {
     document.getElementById("loading").classList.add("hidden");
     displayByCategory(data.data);
@@ -189,7 +185,7 @@ const displayCategories = (category) => {
   category.forEach((e) => {
     const div = document.createElement("div");
     div.innerHTML = `
-        <div id=${e.category} onclick="categoryBtn('${e.category}')" class="cursor-pointer flex items-center gap-2 border py-10 md:px-20 lg:px-24 rounded-3xl justify-center font-inter">
+        <div id=${e.category} onclick="categoryBtn('${e.category}')" class="categoryButtons cursor-pointer flex items-center gap-2 border py-10 md:px-20 lg:px-24 rounded-3xl justify-center font-inter hover:bg-gray-50 transition-all">
                     <img class="w-14" src=${e.category_icon} alt="">
                     <h2 class="text-xl font-black">${e.category}</h2>
                 </div>
