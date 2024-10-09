@@ -19,7 +19,7 @@ const displayAllPets = (pets) => {
     div.innerHTML = `
         <div class="card bg-base-100 border">
                     <figure class="px-6 pt-6">
-                        <img class="w-full rounded-2xl" src=${
+                        <img class="w-full md:h-40 lg:h-48 xl:h-60 rounded-2xl" src=${
                           pet.image
                         } alt="Shoes" class="rounded-xl" />
                     </figure>
@@ -221,7 +221,7 @@ const displayPetDetails = (pet) => {
   div.innerHTML = `
     <div class="card bg-base-100">
                       <figure class="px-1 pt-1 md:px-6 md:pt-6">
-                          <img class="w-full rounded-2xl" src=${
+                          <img class="w-full md:h-40 lg:h-48 xl:h-60 rounded-2xl" src=${
                             pet.image
                           } alt="Shoes" class="rounded-xl" />
                       </figure>
